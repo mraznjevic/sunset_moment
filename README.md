@@ -1,4 +1,4 @@
-# sunset_moments
+# Aplikacija Sunset moments
 
 ## Project setup
 ```
