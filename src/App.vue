@@ -1,19 +1,42 @@
 <template>
   <div id="app">
-    <nav id="nav" class="navbar navbar-light bg-light">
+    <nav id="nav" class="navbar navbar-expand-lg navbar-light bg-light">
       <!-- Image and text -->
-  <a class="navbar-brand" href="#">
-    <img src="@/assets/Sunset-Bar-Logo-300x212.png"  
-    width="auto" 
-    height="40" 
-    class="d-inline-block align-top" 
-    alt="" 
-    loading="lazy">
-    Sunset Moments
-  </a>
-      <router-link to="/FirstPage">FirstPage </router-link> |
-      <router-link to="/">Home</router-link> |
-      <router-link to="/login">Prijava</router-link> |
+      <a class="navbar-brand" href="#">
+        <img
+          src="@/assets/Sunset-Bar-Logo-300x212.png"
+          width="auto"
+          height="40"
+          class="d-inline-block align-top"
+          alt=""
+          loading="lazy"
+        />
+        Sunset Moments
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarToggler">
+        <!--Image and text-->
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <li class="nav-link">
+            
+            <router-link to="/FirstPage">FirstPage </router-link> |
+            <router-link to="/">Home</router-link> |
+            <router-link to="/login">Prijava</router-link> |
+          </li>
+        </li>
+        </ul>
+      </div>
     </nav>
     <router-view />
   </div>
