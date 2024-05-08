@@ -1,12 +1,21 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/FirstPage">FirstPage </router-link> | 
-      <router-link to="/">Home</router-link> | 
-      <router-link to="/login">Prijava</router-link> | 
-      
-    </div>
-    <router-view/>
+    <nav id="nav" class="navbar navbar-light bg-light">
+      <!-- Image and text -->
+  <a class="navbar-brand" href="#">
+    <img src="@/assets/Sunset-Bar-Logo-300x212.png"  
+    width="auto" 
+    height="40" 
+    class="d-inline-block align-top" 
+    alt="" 
+    loading="lazy">
+    Sunset Moments
+  </a>
+      <router-link to="/FirstPage">FirstPage </router-link> |
+      <router-link to="/">Home</router-link> |
+      <router-link to="/login">Prijava</router-link> |
+    </nav>
+    <router-view />
   </div>
 </template>
 
