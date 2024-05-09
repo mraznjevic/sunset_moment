@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav id="nav" class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav id="nav" class="navbar navbar-expand-lg navbar-light">
       <!-- Image and text -->
       <a class="navbar-brand" href="#">
         <img
@@ -28,17 +28,16 @@
         <!--Image and text-->
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <li class="nav-item">
-            <li class="nav-link">
-            
             <router-link to="/FirstPage">FirstPage </router-link> |
             <router-link to="/">Home</router-link> |
             <router-link to="/login">Prijava</router-link> |
           </li>
-        </li>
         </ul>
       </div>
     </nav>
+    <div class="container">
     <router-view />
+  </div>
   </div>
 </template>
 
@@ -53,6 +52,7 @@
 
 #nav {
   padding: 30px;
+  
 
   a {
     font-weight: bold;
