@@ -4,7 +4,7 @@
       <!-- Image and text -->
       <a class="navbar-brand" href="#">
         <img
-          src="@/assets/Sunset-Bar-Logo-300x212.png"
+          src="@/assets/images/Sunset-Bar-Logo-300x212.png"
           width="auto"
           height="40"
           class="d-inline-block align-top"
