@@ -33,6 +33,7 @@
             <router-link to="/login">Prijava</router-link> |
           </li>
         </ul>
+         <input v-model="pojam" /> <button @click="pretrazi()">Pretraga</button>
       </div>
     </nav>
     <div class="container">
