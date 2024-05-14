@@ -1,10 +1,11 @@
 <template>
  <div class="card text-center">
-        <div class="card-header"> Featured </div>
+        <div class="card-header">  
+          {{ info.description }}</div>
         <div class="card-body p-0">
-          <img class="card-img-top" src='info'/>
+          <img class="card-img-top" :src="info.url" />
         </div>
-        <div class="card-footer text-muted">2 days ago</div> 
+        <div class="card-footer text-muted">{{ info.time }}</div> 
       </div>
 </template>
 
