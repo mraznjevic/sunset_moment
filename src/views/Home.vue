@@ -3,7 +3,7 @@
    <div class="row">
     <div class="col-1"></div>
     <div class="col-10">
-     <sunset-moments-card v-for="card in cards"  :key="card" :info="card"/>
+     <sunset-moments-card v-for="card in filteredCards"  :key="card.url" :info="card"/>
      <sunset-moments-card/>
     </div>
     <div class="col-1">... ovo je 3. stupac!</div>
@@ -14,6 +14,7 @@
 <script>
 // @ is an alias to /src
 import SunsetMomentsCard from "@/components/SunsetMomentsCard.vue";
+import store from '@/store'
 
 let cards = []
 
@@ -27,15 +28,26 @@ cards = [
 
 
 export default {
-  name: "Home",
+  name: 'home',
   data: function(){
     return{
           cards:cards,
+          store:store,
     };
   },
 
+
+computed: {
+    filteredCards() {
+      let termin=this.store.searchTerm;
+    return this.cards.filter(card => card.description.indexOf(termin)>=0);
+    },
+  },
+
+
   components: {
-    SunsetMomentsCard: SunsetMomentsCard
+    SunsetMomentsCard: SunsetMomentsCard,
   },
 };
 </script>
+

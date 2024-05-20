@@ -28,13 +28,13 @@
         <!--Image and text-->
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           <li class="nav-item">
-            <router-link to="/FirstPage">FirstPage </router-link> |
-            <router-link to="/">Home</router-link> |
-            <router-link to="/login">Prijava</router-link> |
             <router-link to="/signup" class="nav-link">Sign up</router-link> |
+            <router-link to="/login">Prijava</router-link> |
+            <router-link to="/FirstPage">FirstPage </router-link> |
+            <router-link to="/">Home</router-link> 
           </li>
         </ul>
-         <input v-model="pojam" /> <button @click="pretrazi()">Pretraga</button>
+         <input v-model="store.searchTerm" /> <button @click="pretrazi()">Pretraga</button>
       </div>
     </nav>
     <div class="container">
@@ -42,6 +42,22 @@
   </div>
   </div>
 </template>
+
+
+<script>
+import store from '@/store';
+
+export default {
+  name: 'app',
+     data () {
+         return{
+           store: store, 
+         };
+      },
+};
+</script>
+
+
 
 <style lang="scss">
 #app {
