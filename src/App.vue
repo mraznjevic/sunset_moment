@@ -31,6 +31,7 @@
             <router-link to="/FirstPage">FirstPage </router-link> |
             <router-link to="/">Home</router-link> |
             <router-link to="/login">Prijava</router-link> |
+            <router-link to="/signup" class="nav-link">Sign up</router-link> |
           </li>
         </ul>
          <input v-model="pojam" /> <button @click="pretrazi()">Pretraga</button>
