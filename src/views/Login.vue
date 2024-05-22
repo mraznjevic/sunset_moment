@@ -15,7 +15,7 @@
               <label for="exampleInputPassword1">Password</label>
               <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
             </div>
-            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Submit</button>
+            <button type="button" @click= "login()" class="btn btn-primary">Submit</button>
           </form>
         </div>
         <div class="col-sm"></div>
@@ -23,6 +23,24 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+    name: 'login',
+    data() {
+        return {
+            username: '',
+            password: '',
+        };
+    },
+    methods: {
+        login() {
+            console.log('login...');
+        },
+    },
+};
+
+</script>
 
 <style>
 .login-container {
