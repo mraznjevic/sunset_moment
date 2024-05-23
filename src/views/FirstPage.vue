@@ -6,8 +6,12 @@
         <div class="col-sm"></div>
         <div class="col-sm">
           <form>
-             <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Prijava</button>
-            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Registracija</button>
+            <router-link to="/login">
+              <button type="button" class="btn btn-primary btn-lg" style="width: 100%;">Prijava</button>
+            </router-link>
+            <router-link to="/signup">
+              <button type="button" class="btn btn-primary btn-lg" style="width: 100%;">Registracija</button>
+            </router-link>
           </form>
         </div>
         <div class="col-sm"></div>
