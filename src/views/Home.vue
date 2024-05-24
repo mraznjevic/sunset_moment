@@ -14,9 +14,9 @@
 <script>
 // @ is an alias to /src
 import SunsetMomentsCard from "@/components/SunsetMomentsCard.vue";
-import store from '@/store'
+import store from '@/store';
 
-let cards = []
+let cards = [];
 
 cards = [
  { url: require('@/assets/images/sunset1.jpg'), description: 'evening sunset', time: 'few minutes ago...'},

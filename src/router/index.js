@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import FirstPage from '../views/FirstPage.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
+import store from '@/store';
 
 Vue.use(VueRouter)
 
@@ -11,7 +12,10 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    meta: {
+      needsAuth: true, 
+    }
   },
   {
     path: '/FirstPage',
@@ -45,6 +49,19 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-})
+});
+
+router.beforeEach((to, from, next) => {
+  console.log('Stara ruta', from.name, 'idem na', to.name, 'korisnik', store.currentUser);
+
+  const noUser = store.currentUser !== null;
+  console.log(noUser);
+
+  if (to.meta.needsUser && !noUser) {
+    next('login');
+  } else {
+    next();
+  }  
+   });
 
 export default router
