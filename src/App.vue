@@ -46,6 +46,20 @@
 
 <script>
 import store from '@/store';
+import { firebase } from '@/firebase';
+import  router  from '@/router';
+
+firebase.auth().onAuthStateChanged((user) => {
+ if (user) {
+ // User is signed in.
+ console.log('*** User', user.email);
+ store.currentUser = user.email;
+ } else {
+ // User is not signed in.
+ console.log('*** No user');
+ }
+});
+
 
 export default {
   name: 'app',
