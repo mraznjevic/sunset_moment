@@ -30,10 +30,10 @@
           <li v-if="!store.currentUser" class="nav-item">
             <router-link to="/FirstPage" class="nav-link">FirstPage</router-link>
           </li>
-          <li v-if="!store.currentUser" class="nav-item">
+          <li v-if="!store.currentUser && !isFirstPage && !isLoginPage" class="nav-item">
             <router-link to="/signup" class="nav-link">Sign up</router-link>
           </li>
-          <li v-if="!store.currentUser" class="nav-item">
+          <li v-if="!store.currentUser && !isFirstPage && !isSignupPage" class="nav-item">
             <router-link to="/login" class="nav-link">Prijava</router-link>
           </li>
           <li v-if="store.currentUser" class="nav-item">
@@ -89,6 +89,19 @@ export default {
            store: store, 
          };
       },
+      computed: {
+    isLoginPage() {
+      return this.$route.path === '/login';
+    },
+    isFirstPage() {
+      return this.$route.path === '/FirstPage';
+    },
+    isSignupPage() {
+      return this.$route.path === '/signup';
+    }
+  },
+
+
       methods:{
         logout(){
           firebase
