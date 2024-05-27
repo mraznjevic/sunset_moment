@@ -28,7 +28,7 @@ id="imageDescription"
 image</button>
  </form>
      <sunset-moments-card v-for="card in filteredCards"  :key="card.url" :info="card"/>
-     <sunset-moments-card/>
+
     </div>
     <div class="col-1">... ovo je 3. stupac!</div>
   </div>
@@ -39,6 +39,7 @@ image</button>
 // @ is an alias to /src
 import SunsetMomentsCard from "@/components/SunsetMomentsCard.vue";
 import store from '@/store';
+import { db } from "@/firebase";
 
 let cards = [];
 
@@ -52,19 +53,42 @@ cards = [
 
 
 export default {
-  name: 'home',
-  data: function(){
-    return{
-          cards:cards,
-          store:store,
+  name: "home",
+  data: function () {
+    return {
+      cards: cards,
+      store: store,
+      newImageUrl: "", // <-- url nove slike
+      newImageDescription: "", // <-- opis nove slike
     };
   },
-
-
-computed: {
+  methods: {
+    postNewImage() {
+      const imageUrl = this.newImageUrl;
+      const imageDescription = this.newImageDescription;
+     
+      db.collection("posts")
+        .add({
+          url: imageUrl,
+          description: imageDescription,
+          email: store.currentUser,
+          posted_at: Date.now(),
+        })
+        .then((doc) => {
+          console.log("Spremljeno", doc);
+          this.newImageDescription = "";
+          this.newImageUrl = "";
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+      // ovdje će ići Firebase kod
+    },
+  },
+  computed: {
     filteredCards() {
-      let termin=this.store.searchTerm;
-    return this.cards.filter(card => card.description.indexOf(termin)>=0);
+      let termin = this.store.searchTerm;
+      return this.cards.filter((card) => card.description.indexOf(termin) >= 0);
     },
   },
 
@@ -73,5 +97,6 @@ computed: {
     SunsetMomentsCard: SunsetMomentsCard,
   },
 };
+
 </script>
 
