@@ -16,7 +16,7 @@
 import moment from 'moment';
 export default {
   props: ["info"],
-  name: 'SunsetMomentsCard',
+  name: "SunsetMomentsCard",
   computed: {
     postedFromNow() {
       return moment(this.info.time).fromNow();
@@ -24,5 +24,3 @@ export default {
   },
 };
 </script>
-
-
