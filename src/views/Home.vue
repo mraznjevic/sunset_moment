@@ -3,16 +3,16 @@
     <div class="row">
       <div class="col-1"></div>
       <div class="col-10">
-        <form @submit.prevent="postNewImage" class="form-inline mb-5">
+        <form @submit.prevent="postNewImage" class="mb-5">
           <div class="form-group">
-            <label for="imageUrl">Image URL</label>
-            <input
-              v-model="newImageUrl"
-              type="text"
-              class="form-control ml-2"
-              placeholder="Enter the image URL"
-              id="imageUrl"
-            />
+            
+                      <croppa
+            :width="400"
+            :height="400"
+            placeholder="Učitaj sliku..."
+            v-model="imageReference"
+          ></croppa>
+
           </div>
           <div class="form-group">
             <label for="imageDescription">Description</label>
@@ -36,7 +36,17 @@
 <script>
 import SunsetMomentsCard from "@/components/SunsetMomentsCard.vue";
 import store from '@/store';
-import { db } from "@/firebase";
+import { db, storage } from "@/firebase";
+
+//cards = [
+// {url: require("@/assets/images/sunset1.jpg"),description: "evening sunset",time: "few minutes ago...",},
+// {url: require("@/assets/images/sunset2.jpg"),description: "nature sunset",time: "hour ago...",},
+//{url: require("@/assets/images/sunset3.jpg"),description: "mountain sunset",time: "few hours ago...",},
+// {url: require("@/assets/images/sunset4.jpg"),description: "relax moments",time: "9 hours ago...",},
+//];
+
+
+
 
 export default {
   name: "home",
@@ -46,6 +56,7 @@ export default {
       store: store,
       newImageUrl: "", // url nove slike
       newImageDescription: "", // opis nove slike
+      imageReference: null,
     };
   },
   mounted() {
@@ -72,14 +83,34 @@ export default {
         });
     },
     postNewImage() {
-      const imageUrl = this.newImageUrl;
-      const imageDescription = this.newImageDescription;
+      this.imageReference.generateBlob((blobData) => {
+        console.log(blobData);
 
+       let imageName = "posts/" + store.currentUser + "/" + Date.now() + ".png";
+
+ 
+
+       storage
+          .ref(imageName)
+          .put(blobData)
+          .then(result => {
+            // čuva this
+            // ... uspješno spremanje
+            console.log(result)
+          }).catch(e=> {
+            console.error(e)
+          });
+       });
+  
+
+      const imageDescription = this.newImageDescription;
+      
       db.collection("posts")
         .add({
           url: imageUrl,
           description: imageDescription,
-          posted_at: new Date(),
+          email: store.currentUser,
+          posted_at: Date.now(),
         })
         .then((doc) => {
           console.log("Spremljeno", doc);
@@ -94,7 +125,7 @@ export default {
   },
   computed: {
     filteredCards() {
-      const termin = ""; // Unesite termin pretrage ili prilagodite logiku
+      let termin = this.store.searchTerm;
       return this.cards.filter((card) => card.description.indexOf(termin) >= 0);
     },
   },
@@ -103,3 +134,4 @@ export default {
   },
 };
 </script>
+
