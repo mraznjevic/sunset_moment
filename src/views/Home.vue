@@ -94,9 +94,13 @@ export default {
           .ref(imageName)
           .put(blobData)
           .then(result => {
-            // čuva this
-            // ... uspješno spremanje
-            console.log(result)
+           // ... uspješno spremanje
+            result.ref
+              .getDownloadURL()
+              .then((url) => {
+                // čuva this
+                console.log("Javni link", url);
+              })
           }).catch(e=> {
             console.error(e)
           });
