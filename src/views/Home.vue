@@ -111,7 +111,7 @@ export default {
                   .then((doc) => {
                     console.log("Spremljeno", doc);
                     this.newImageDescription = "";
-                    this.imageReference=null;
+                    this.imageReference.remove();
                     this.getPosts();
                   })
                   .catch((e) => {
