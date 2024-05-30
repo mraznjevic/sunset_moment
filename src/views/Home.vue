@@ -5,14 +5,12 @@
       <div class="col-10">
         <form @submit.prevent="postNewImage" class="mb-5">
           <div class="form-group">
-            
-                      <croppa
-            :width="400"
-            :height="400"
-            placeholder="Učitaj sliku..."
-            v-model="imageReference"
-          ></croppa>
-
+            <croppa
+              :width="400"
+              :height="400"
+              placeholder="Učitaj sliku..."
+              v-model="imageReference"
+            ></croppa>
           </div>
           <div class="form-group">
             <label for="imageDescription">Description</label>
@@ -26,7 +24,11 @@
           </div>
           <button type="submit" class="btn btn-primary ml-2">Post image</button>
         </form>
-        <sunset-moments-card v-for="card in filteredCards" :key="card.id" :info="card"/>
+        <sunset-moments-card
+          v-for="card in filteredCards"
+          :key="card.id"
+          :info="card"
+        />
       </div>
       <div class="col-1">... ovo je 3. stupac!</div>
     </div>
@@ -35,7 +37,7 @@
 
 <script>
 import SunsetMomentsCard from "@/components/SunsetMomentsCard.vue";
-import store from '@/store';
+import store from "@/store";
 import { db, storage } from "@/firebase";
 
 //cards = [
@@ -44,9 +46,6 @@ import { db, storage } from "@/firebase";
 //{url: require("@/assets/images/sunset3.jpg"),description: "mountain sunset",time: "few hours ago...",},
 // {url: require("@/assets/images/sunset4.jpg"),description: "relax moments",time: "9 hours ago...",},
 //];
-
-
-
 
 export default {
   name: "home",
@@ -86,45 +85,47 @@ export default {
       this.imageReference.generateBlob((blobData) => {
         console.log(blobData);
 
-       let imageName = "posts/" + store.currentUser + "/" + Date.now() + ".png";
+        let imageName =
+          "posts/" + store.currentUser + "/" + Date.now() + ".png";
 
- 
-
-       storage
+        storage
           .ref(imageName)
           .put(blobData)
-          .then(result => {
-           // ... uspješno spremanje
+          .then((result) => {
+            // ... uspješno spremanje
             result.ref
               .getDownloadURL()
               .then((url) => {
                 // čuva this
                 console.log("Javni link", url);
-              })
-          }).catch(e=> {
-            console.error(e)
-          });
-       });
-  
 
-      const imageDescription = this.newImageDescription;
-      
-      db.collection("posts")
-        .add({
-          url: imageUrl,
-          description: imageDescription,
-          email: store.currentUser,
-          posted_at: Date.now(),
-        })
-        .then((doc) => {
-          console.log("Spremljeno", doc);
-          this.newImageDescription = "";
-          this.newImageUrl = "";
-          this.getPosts();
-        })
-        .catch((e) => {
-          console.error(e);
-        });
+                const imageDescription = this.newImageDescription;
+
+                db.collection("posts")
+                  .add({
+                    url: url,
+                    description: imageDescription,
+                    email: store.currentUser,
+                    posted_at: Date.now(),
+                  })
+                  .then((doc) => {
+                    console.log("Spremljeno", doc);
+                    this.newImageDescription = "";
+                    this.imageReference=null;
+                    this.getPosts();
+                  })
+                  .catch((e) => {
+                    console.error(e);
+                  });
+              })
+              .catch((e) => {
+                console.error(e);
+              });
+          })
+          .catch((e) => {
+            console.error(e);
+          });
+      });
     },
   },
   computed: {
@@ -138,4 +139,3 @@ export default {
   },
 };
 </script>
-
