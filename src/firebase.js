@@ -5,19 +5,21 @@ import 'firebase/storage';
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBZX1PZ6b7sij6iallV-ltH4g-bun3pPpU",
-    authDomain: "fipugram-9b333.firebaseapp.com",
-    projectId: "fipugram-9b333",
-    storageBucket: "fipugram-9b333.appspot.com",
-    messagingSenderId: "792296263962",
-    appId: "1:792296263962:web:67cc3f4bd703e11ca59ca3"
-  };
+  apiKey: "AIzaSyDcoOIW_zmtPUnXHOnGZFd9xxQ84iscLOk",
+  authDomain: "sunset-moments.firebaseapp.com",
+  projectId: "sunset-moments",
+  storageBucket: "sunset-moments.appspot.com",
+  messagingSenderId: "95011226195",
+  appId: "1:95011226195:web:293573c57230440bb67ca6"
+};
 
-  // Initialize Firebase
- firebase.initializeApp(firebaseConfig);
-
- let db = firebase.firestore();
- let storage = firebase.storage();
- 
- export { firebase, db, storage };
+// Initialize Firebase
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  
+  let db = firebase.firestore();
+  let storage = firebase.storage();
+  
+  export { firebase, db, storage };
  

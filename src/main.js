@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import firebase from './firebase';
 import Croppa from 'vue-croppa';
 import 'vue-croppa/dist/vue-croppa.css';
 

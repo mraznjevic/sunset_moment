@@ -3,16 +3,16 @@
     <div class="row">
       <div class="col-1"></div>
       <div class="col-10">
-        <form @submit.prevent="postNewImage" class="mb-5">
+        <form @submit.prevent="postNewImage" class="form-inline mb-5">
           <div class="form-group">
-            
-                      <croppa
-            :width="400"
-            :height="400"
-            placeholder="Učitaj sliku..."
-            v-model="imageReference"
-          ></croppa>
-
+            <label for="imageUrl">Image URL</label>
+            <input
+              v-model="newImageUrl"
+              type="text"
+              class="form-control ml-2"
+              placeholder="Enter the image URL"
+              id="imageUrl"
+            />
           </div>
           <div class="form-group">
             <label for="imageDescription">Description</label>
@@ -46,7 +46,6 @@ export default {
       store: store,
       newImageUrl: "", // url nove slike
       newImageDescription: "", // opis nove slike
-      imageReference: null,
     };
   },
   mounted() {
@@ -75,13 +74,12 @@ export default {
     postNewImage() {
       const imageUrl = this.newImageUrl;
       const imageDescription = this.newImageDescription;
-      
+
       db.collection("posts")
         .add({
           url: imageUrl,
           description: imageDescription,
-          email: store.currentUser,
-          posted_at: Date.now(),
+          posted_at: new Date(),
         })
         .then((doc) => {
           console.log("Spremljeno", doc);
@@ -96,7 +94,7 @@ export default {
   },
   computed: {
     filteredCards() {
-      let termin = this.store.searchTerm;
+      const termin = ""; // Unesite termin pretrage ili prilagodite logiku
       return this.cards.filter((card) => card.description.indexOf(termin) >= 0);
     },
   },
