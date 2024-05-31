@@ -1,4 +1,6 @@
 export default {
     searchTerm: '',
-    currentUser: null, // nova varijabla
+    currentUser: "null" // nova varijabla
+
    }
+   
