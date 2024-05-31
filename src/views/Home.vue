@@ -235,5 +235,9 @@ zaprati(username) {
   background-color: #0056b3;
   border-color: #0056b3;
 }
-</style>
 
+/* Prostor između dodaj korisnika i dna stranice */
+.space-at-bottom {
+  margin-bottom: 120px; /* Promijeni vrijednost prema potrebi */
+}
+</style>
