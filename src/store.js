@@ -1,6 +1,7 @@
 export default {
     searchTerm: '',
-    currentUser: "null" // nova varijabla
+    currentUser: "ivanhorvat1@gmail.com" // trenutni korisnik
 
    }
+
    
