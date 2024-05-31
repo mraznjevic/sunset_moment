@@ -138,9 +138,9 @@ export default {
     pretrazi() {
       console.log("Tražim " + this.pojam);
 
-      this.rezultatiPretrage = [
-        {username:"anarakic@gmail.com"},
-        {username: "sanjababic@gmail.com"}
+     this.rezultatiPretrage = [
+        //{username:"anarakic@gmail.com"},
+        //{username: "sanjababic@gmail.com"}
       ];
 
       db.collection('users').where("username", "==", this.pojam).get().then(snapshot => {
