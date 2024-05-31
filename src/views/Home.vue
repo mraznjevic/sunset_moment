@@ -155,6 +155,10 @@ export default {
 zaprati(username) {
       console.log("Želim pratiti", username);
       console.log("A ja jesam", store.currentUser);
+      
+      if (username === store.currentUser) {
+        return;
+      }
 
       // Dodavanje pratitelja
       db.collection('users').doc(store.currentUser).update({
