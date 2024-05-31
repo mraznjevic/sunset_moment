@@ -182,3 +182,58 @@ zaprati(username) {
   },
 };
 </script>
+
+<style>
+/* Stilizacija za login-container */
+.login-container {
+  margin-top: 20px;
+}
+
+/* Stilizacija za formu */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Stilizacija za opis slike */
+#imageDescription {
+  width: 100%;
+}
+
+/* Stilizacija za dugme */
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+/* Stilizacija za pretraživanje korisnika */
+.about {
+  margin-top: 50px;
+}
+
+.about h1 {
+  margin-bottom: 20px;
+}
+
+.about input {
+  margin-bottom: 10px;
+}
+
+.about button {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+.about button:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+</style>
+
