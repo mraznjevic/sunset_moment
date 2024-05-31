@@ -35,8 +35,8 @@
       </div>
     </div>
     <div class="about">
-      <h1>Pretraga</h1>
-      <input v-model="pojam" /> <button @click="pretrazi()">Pretraga</button>
+      <h1>Pretraži druge pratitelje</h1>
+      <input v-model="pojam" /> <button @click="pretrazi()">Pretraži</button>
       <div v-for="user in rezultatiPretrage" :key="user.id">
         {{ user.username }}
         <button @click="zaprati(user.username)">+</button>
@@ -44,6 +44,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import SunsetMomentsCard from "@/components/SunsetMomentsCard.vue";
