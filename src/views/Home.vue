@@ -24,7 +24,7 @@
               />
             </div>
             <button type="submit" class="btn btn-primary ml-2">Post image</button>
-                    </form>
+          </form>
           <sunset-moments-card
             v-for="card in filteredCards"
             :key="card.id"
@@ -35,8 +35,8 @@
         <div class="col-1"></div>
       </div>
     </div>
-    <div class="about">
-      <h1>Pretraži druge pratitelje</h1>
+   <div class="about space-at-bottom">
+      <h1>Pretraži druge korisnike</h1>
       <input v-model="pojam" /> <button @click="pretrazi()">Pretraži</button>
       <div v-for="user in rezultatiPretrage" :key="user.id">
         {{ user.username }}
@@ -45,7 +45,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 import SunsetMomentsCard from "@/components/SunsetMomentsCard.vue";
@@ -76,6 +75,7 @@ export default {
     this.getPosts();
     this.getFollowers();
   },
+  
   methods: {
     postNewImage() {
       if (!this.imageReference || !this.newImageDescription) return;
@@ -92,6 +92,7 @@ export default {
               description: imageDescription,
               email: store.currentUser,
               posted_at: Date.now(),
+              comments: [],
             }).then(() => {
               console.log("Slika je uspješno objavljena");
               this.newImageDescription = "";
@@ -118,8 +119,10 @@ export default {
             time: data.posted_at,
             description: data.description,
             url: data.url,
+            comments: data.comments || [] // Učitavamo komentare
           });
         });
+        this.cards = cards;
       }).catch((error) => {
         console.error("Greška prilikom dobijanja postova:", error);
       });
@@ -140,7 +143,21 @@ export default {
       });
     },
 
-
+    // Metoda za prikazivanje komentara
+    getComments(postId) {
+      db.collection("posts").doc(postId).get().then((doc) => {
+        if (doc.exists) {
+          const postData = doc.data();
+          const comments = postData.comments || [];
+          console.log("Comments:", comments);
+          // logika za prikazivanje komentara na sučelju
+        } else {
+          console.error("Ne postoji slika s ID-om:", postId);
+        }
+      }).catch((error) => {
+        console.error("Greška prilikom dobijanja komentara:", error);
+      });
+    },
     getFollowers() {
       db.collection("users").doc(store.currentUser).get().then((doc) => {
         if (doc.exists) {
@@ -150,14 +167,14 @@ export default {
           }
         }
       }).catch((error) => {
-        console.error("Greška prilikom dobijanja pratilaca:", error);
+        console.error("Greška prilikom dobijanja pratioca:", error);
       });
     },
     
     pretrazi() {
       console.log("Tražim " + this.pojam);
 
-     this.rezultatiPretrage = [
+      this.rezultatiPretrage = [
         //{username:"anarakic@gmail.com"},
         //{username: "sanjababic@gmail.com"}
       ];
@@ -174,7 +191,7 @@ export default {
 zaprati(username) {
       console.log("Želim pratiti", username);
       console.log("A ja jesam", store.currentUser);
-      
+
       if (username === store.currentUser) {
         return;
       }
@@ -200,7 +217,6 @@ zaprati(username) {
   },
 };
 </script>
-
 <style>
 /* Stilizacija za login-container */
 .login-container {
@@ -256,6 +272,6 @@ zaprati(username) {
 
 /* Prostor između dodaj korisnika i dna stranice */
 .space-at-bottom {
-  margin-bottom: 150px; /* Promijeni vrijednost prema potrebi */
+  margin-bottom: 120px; /* Promijeni vrijednost prema potrebi */
 }
 </style>
