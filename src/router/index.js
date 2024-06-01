@@ -54,8 +54,8 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   console.log('Stara ruta', from.name, 'idem na', to.name, 'korisnik', store.currentUser);
 
-  const noUser = store.currentUser !== null;
-  console.log(noUser);
+  const isAuthenticated = store.currentUser !== null;
+  console.log('Authenticated:', isAuthenticated);
 
   if (to.meta.needsUser && !noUser) {
     next('login');

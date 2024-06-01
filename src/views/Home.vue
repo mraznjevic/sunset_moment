@@ -34,7 +34,7 @@
         </div>
         <div class="col-1"></div>
       </div>
-    </div>
+  
    <div class="about space-at-bottom">
       <h1>Pretraži druge korisnike</h1>
       <input v-model="pojam" /> <button @click="pretrazi()">Pretraži</button>
@@ -43,6 +43,7 @@
         <button @click="zaprati(user.username)">+</button>
       </div>
     </div>
+      </div>
   </div>
 </template>
 
@@ -122,7 +123,7 @@ export default {
             comments: data.comments || [] // Učitavamo komentare
           });
         });
-        this.cards = cards;
+        
       }).catch((error) => {
         console.error("Greška prilikom dobijanja postova:", error);
       });
