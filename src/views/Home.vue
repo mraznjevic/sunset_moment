@@ -24,11 +24,12 @@
               />
             </div>
             <button type="submit" class="btn btn-primary ml-2">Post image</button>
-          </form>
+                    </form>
           <sunset-moments-card
             v-for="card in filteredCards"
             :key="card.id"
             :info="card"
+             @add-comment="addCommentToDatabase"
           />
         </div>
         <div class="col-1"></div>
@@ -95,7 +96,7 @@ export default {
               console.log("Slika je uspješno objavljena");
               this.newImageDescription = "";
               this.imageReference.remove();
-              this.getPosts(); // Osveži prikaz slika nakon dodavanja nove slike
+              this.getPosts(); // Osvježi prikaz slika nakon dodavanja nove slike
             }).catch((error) => {
               console.error("Greška prilikom dodavanja slike:", error);
             });
@@ -123,6 +124,23 @@ export default {
         console.error("Greška prilikom dobijanja postova:", error);
       });
     },
+    // Metoda za dodavanje komentara
+    addCommentToDatabase(postId, commentText) {
+      db.collection("posts").doc(postId).update({
+        comments: firebase.firestore.FieldValue.arrayUnion({
+          user: store.currentUser,
+          text: commentText,
+          timestamp: Date.now()
+        })
+      }).then(() => {
+        console.log("Komentar uspješno dodan");
+        this.getPosts(); // Osvježiti prikaz slike ili komentara nakon dodavanja komentara
+      }).catch((error) => {
+        console.error("Greška prilikom dodavanja komentara:", error);
+      });
+    },
+
+
     getFollowers() {
       db.collection("users").doc(store.currentUser).get().then((doc) => {
         if (doc.exists) {
@@ -238,6 +256,6 @@ zaprati(username) {
 
 /* Prostor između dodaj korisnika i dna stranice */
 .space-at-bottom {
-  margin-bottom: 120px; /* Promijeni vrijednost prema potrebi */
+  margin-bottom: 150px; /* Promijeni vrijednost prema potrebi */
 }
 </style>
