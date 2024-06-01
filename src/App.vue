@@ -117,6 +117,8 @@ export default {
              this.$router.push({ name: 'login'});
           });
         },
+       
+
       },
 };
 </script>

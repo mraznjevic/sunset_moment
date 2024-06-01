@@ -35,16 +35,32 @@
         <div class="col-1"></div>
       </div>
   
-   <div class="about space-at-bottom">
-      <h1>Pretraži druge korisnike</h1>
-      <input v-model="pojam" /> <button @click="pretrazi()">Pretraži</button>
-      <div v-for="user in rezultatiPretrage" :key="user.id">
-        {{ user.username }}
-        <button @click="zaprati(user.username)">+</button>
+      <!-- Pretraživač za korisnike -->
+      <div class="about space-at-bottom">
+        <h1>Pretraži druge korisnike</h1>
+        <input v-model="pojam" /> <button @click="pretrazi()">Pretraži</button>
+        <div v-for="user in rezultatiPretrage" :key="user.id">
+          {{ user.username }}
+          <button @click="zaprati(user.username)">+</button>
+        </div>
+      </div>
+
+      <!-- Pretraživač za slike po opisu -->
+    <div class="about space-at-bottom">
+      <h1>Pretraži slike po opisu</h1>
+      <input v-model="opisSlike" /> <button @click="pretraziSlikePoOpisu()">Pretraži</button>
+      <div v-if="rezultatiPretrageSlika.length === 0">
+        <p>Nema rezultata za traženi opis slike.</p>
+      </div>
+      <div v-else>
+        <div v-for="slika in rezultatiPretrageSlika" :key="slika.id">
+          <img :src="slika.url" :alt="slika.description" style="max-width: 200px; max-height: 200px;">
+          <p>{{ slika.description }}</p>
+        </div>
       </div>
     </div>
-      </div>
   </div>
+    </div>
 </template>
 
 <script>
@@ -69,7 +85,9 @@ export default {
       cards: [],
       followers: [],
       pojam: "",
+      opisSlike: "",
       rezultatiPretrage: [],
+      rezultatiPretrageSlika: []
     };
   },
   mounted() {
@@ -126,6 +144,22 @@ export default {
         
       }).catch((error) => {
         console.error("Greška prilikom dobijanja postova:", error);
+      });
+    },
+      // Metoda za pretraživanje slika po opisu
+      pretraziSlikePoOpisu() {
+      console.log("Pretražujem slike po opisu: " + this.opisSlike);
+
+      this.rezultatiPretrageSlika = [
+        
+      ];
+
+      db.collection("posts").where("description", "==", this.opisSlike).get().then(snapshot => {
+        snapshot.forEach(doc => {
+          this.rezultatiPretrageSlika.push({ ...doc.data(), id: doc.id });
+        });
+      }).catch(error => {
+        console.error("Greška prilikom pretraživanja slika po opisu:", error);
       });
     },
     // Metoda za dodavanje komentara
