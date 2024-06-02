@@ -53,13 +53,17 @@
         <div class="col-1"></div>
       </div>
 
-      <!-- Pretraživač za korisnike -->
+<!-- Pretraživač za korisnike -->
       <div class="about space-at-bottom">
         <h1>Pretraži druge korisnike</h1>
-        <input v-model="pojam" /> <button @click="pretrazi()">Pretraži</button>
+        <input v-model="pojam" /> 
+        <button @click="pretrazi()">Pretraži</button>
         <div v-for="user in rezultatiPretrage" :key="user.id">
           {{ user.username }}
-          <button @click="zaprati(user.username)">+</button>
+          <!-- Dodani dio za prikaz znaka "+" ili "-" -->
+          <button @click="zapratiOtprati(user.username)">
+            {{ isPracen(user.username) ? '-' : '+' }}
+          </button>
         </div>
       </div>
     </div>
@@ -78,7 +82,6 @@ import firebase from 'firebase/app';
 //{url: require("@/assets/images/sunset3.jpg"),description: "mountain sunset",time: "few hours ago...",},
 // {url: require("@/assets/images/sunset4.jpg"),description: "relax moments",time: "9 hours ago...",},
 //];
-
 
 export default {
   data() {
@@ -153,10 +156,8 @@ export default {
       pretraziSlikePoOpisu() {
       console.log("Pretražujem slike po opisu: " + this.opisSlike);
 
-      this.rezultatiPretrageSlika = [
+      this.rezultatiPretrageSlika = [];
         
-      ];
-
       db.collection("posts").where("description", "==", this.opisSlike).get().then(snapshot => {
         snapshot.forEach(doc => {
           this.rezultatiPretrageSlika.push({ ...doc.data(), id: doc.id });
@@ -196,6 +197,70 @@ export default {
         console.error("Greška prilikom dobijanja komentara:", error);
       });
     },
+
+    // Metoda za provjeru je li korisnik već praćen
+    isPracen(username) {
+      return this.followers.includes(username);
+    },
+    
+    // Metoda za praćenje ili otpraćenje korisnika
+    zapratiOtprati(username) {
+      console.log("Želim pratiti/otpratiti", username);
+      console.log("A ja jesam", store.currentUser);
+
+      if (username === store.currentUser) {
+        return;
+      }
+
+      if (this.isPracen(username)) {
+        // Ako je korisnik već praćen, otprati ga
+        this.otprati(username);
+      } else {
+        // Inače, zaprati ga
+        this.zaprati(username);
+      }
+    },
+
+    // Metoda za praćenje korisnika
+    zaprati(username) {
+      console.log("Želim pratiti", username);
+      console.log("A ja jesam", store.currentUser);
+
+      if (username === store.currentUser) {
+        return;
+      }
+
+      // Dodavanje pratitelja
+      db.collection('users').doc(store.currentUser).update({
+        followers: firebase.firestore.FieldValue.arrayUnion(username)
+      }).then(() => {
+       console.log("Uspješno dodan pratitelj");
+        this.getFollowers(); // Ažuriranje popisa pratitelja nakon dodavanja novog pratitelja
+      }).catch(error => {
+        console.error("Greška prilikom ažuriranja dokumenta: ", error);
+      });
+    },
+
+    // Metoda za otpraćivanje korisnika
+    otprati(username) {
+      console.log("Želim otpratiti", username);
+      console.log("A ja jesam", store.currentUser);
+
+      if (username === store.currentUser) {
+        return;
+      }
+
+      // Uklanjanje pratitelja
+      db.collection('users').doc(store.currentUser).update({
+        followers: firebase.firestore.FieldValue.arrayRemove(username)
+      }).then(() => {
+        console.log("Uspješno uklonjen pratitelj");
+        this.getFollowers(); // Ažuriranje popisa pratitelja nakon uklanjanja pratitelja
+      }).catch(error => {
+        console.error("Greška prilikom ažuriranja dokumenta: ", error);
+      });
+    },
+
     getFollowers() {
       db.collection("users").doc(store.currentUser).get().then((doc) => {
         if (doc.exists) {
@@ -212,10 +277,7 @@ export default {
     pretrazi() {
       console.log("Tražim " + this.pojam);
 
-      this.rezultatiPretrage = [
-        //{username:"anarakic@gmail.com"},
-        //{username: "sanjababic@gmail.com"}
-      ];
+      this.rezultatiPretrage = [];
 
       db.collection('users').where("username", "==", this.pojam).get().then(snapshot => {
         snapshot.forEach(doc => {
@@ -223,25 +285,6 @@ export default {
         });
       }).catch(error => {
         console.error("Error fetching users:", error);
-      });
-      
-    },
-zaprati(username) {
-      console.log("Želim pratiti", username);
-      console.log("A ja jesam", store.currentUser);
-
-      if (username === store.currentUser) {
-        return;
-      }
-
-      // Dodavanje pratitelja
-      db.collection('users').doc(store.currentUser).update({
-        followers: firebase.firestore.FieldValue.arrayUnion(username)
-      }).then(() => {
-        console.log("Uspješno dodan pratitelj");
-        this.getFollowers(); // Ažuriranje popisa pratitelja nakon dodavanja novog pratitelja
-      }).catch(error => {
-        console.error("Greška prilikom ažuriranja dokumenta: ", error);
       });
     }
   },
@@ -274,7 +317,6 @@ zaprati(username) {
   padding: 10px;
   box-sizing: border-box;
 }
-
 
 /* Stilizacija za opis slike */
 #imageDescription {
@@ -323,3 +365,4 @@ zaprati(username) {
   margin-bottom: 120px; /* Promijeni vrijednost prema potrebi */
 }
 </style>
+
