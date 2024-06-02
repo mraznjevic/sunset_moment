@@ -40,6 +40,9 @@
             <router-link to="/" class="nav-link">Home</router-link>
           </li>
           <li v-if="store.currentUser" class="nav-item">
+            <router-link to="/profile" class="nav-link">Profile</router-link> <!-- Dodana navigacijska veza za profil -->
+          </li>
+          <li v-if="store.currentUser" class="nav-item">
             <a href="#" @click="logout()" class="nav-link">Logout</a>
           </li>
         </ul>
@@ -51,40 +54,39 @@
   </div>
 </template>
 
-
 <script>
 import store from '@/store';
 import { firebase } from '@/firebase';
-import  router  from '@/router';
+import router from '@/router';
 
 firebase.auth().onAuthStateChanged((user) => {
- const currentRoute = router.currentRoute;
- if (user) {
- // User is signed in.
- console.log('*** User', user.email);
- store.currentUser = user.email;
- // take me home
- if (!currentRoute.meta.needsAuth) {
- router.push({ name: 'home' });
- }
- } else {
- // User is not signed in.
- console.log('*** No user');
- store.currentUser = null;
- // kick me out
- if (currentRoute.meta.needsAuth) {
- router.push({ name: 'login' });
- }
- }
+  const currentRoute = router.currentRoute;
+  if (user) {
+    // User is signed in.
+    console.log('*** User', user.email);
+    store.currentUser = user.email;
+    // take me home
+    if (!currentRoute.meta.needsAuth) {
+      router.push({ name: 'home' });
+    }
+  } else {
+    // User is not signed in.
+    console.log('*** No user');
+    store.currentUser = null;
+    // kick me out
+    if (currentRoute.meta.needsAuth) {
+      router.push({ name: 'login' });
+    }
+  }
 });
 export default {
   name: 'app',
-     data () {
-         return{
-           store: store, 
-         };
-      },
-      computed: {
+  data() {
+    return {
+      store: store,
+    };
+  },
+  computed: {
     isLoginPage() {
       return this.$route.path === '/login';
     },
@@ -95,23 +97,18 @@ export default {
       return this.$route.path === '/signup';
     }
   },
-
-
-      methods:{
-        logout(){
-          firebase
-          .auth()
-          .signOut()
-          .then (() => {
-             this.$router.push({ name: 'login'});
-          });
-        },
-       
-
-      },
+  methods: {
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.push({ name: 'login' });
+        });
+    },
+  },
 };
 </script>
-
 
 <style lang="scss">
 #app {
@@ -124,7 +121,6 @@ export default {
 
 #nav {
   padding: 30px;
-  
 
   a {
     font-weight: bold;

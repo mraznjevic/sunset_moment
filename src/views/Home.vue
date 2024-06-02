@@ -365,4 +365,3 @@ export default {
   margin-bottom: 120px; /* Promijeni vrijednost prema potrebi */
 }
 </style>
-
