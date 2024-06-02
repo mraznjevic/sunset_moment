@@ -43,17 +43,6 @@
             <a href="#" @click="logout()" class="nav-link">Logout</a>
           </li>
         </ul>
-        <!-- Search form -->
-        <form class="form-inline my-2 my-lg-0">
-          <input
-            v-model="store.searchTerm"
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button @click="pretrazi()" class="btn btn-outline-success my-2 my-sm-0" type="button">Pretraga</button>
-        </form>
       </div>
     </nav>
     <div class="container">

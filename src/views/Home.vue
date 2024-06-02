@@ -1,5 +1,23 @@
 <template>
   <div>
+    <!-- Pretraživač za slike po opisu -->
+    <div class="login-container">
+    <div class="about space-at-bottom">
+      <h1>Pretraži slike</h1>
+      <input v-model="opisSlike" /> <button @click="pretraziSlikePoOpisu()">Pretraži</button>
+      <div v-if="rezultatiPretrageSlika.length === 0">
+        <p>Nema rezultata za traženi opis slike.</p>
+      </div>
+      <div v-else>
+        <div v-for="slika in rezultatiPretrageSlika" :key="slika.id">
+          <img :src="slika.url" :alt="slika.description" style="max-width: 500px; max-height: 700px;">
+          <p>{{ slika.description }}</p>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+
     <div class="login-container">
       <div class="row">
         <div class="col-1"></div>
@@ -29,12 +47,12 @@
             v-for="card in filteredCards"
             :key="card.id"
             :info="card"
-             @add-comment="addCommentToDatabase"
+            @add-comment="addCommentToDatabase"
           />
         </div>
         <div class="col-1"></div>
       </div>
-  
+
       <!-- Pretraživač za korisnike -->
       <div class="about space-at-bottom">
         <h1>Pretraži druge korisnike</h1>
@@ -44,23 +62,8 @@
           <button @click="zaprati(user.username)">+</button>
         </div>
       </div>
-
-      <!-- Pretraživač za slike po opisu -->
-    <div class="about space-at-bottom">
-      <h1>Pretraži slike po opisu</h1>
-      <input v-model="opisSlike" /> <button @click="pretraziSlikePoOpisu()">Pretraži</button>
-      <div v-if="rezultatiPretrageSlika.length === 0">
-        <p>Nema rezultata za traženi opis slike.</p>
-      </div>
-      <div v-else>
-        <div v-for="slika in rezultatiPretrageSlika" :key="slika.id">
-          <img :src="slika.url" :alt="slika.description" style="max-width: 200px; max-height: 200px;">
-          <p>{{ slika.description }}</p>
-        </div>
-      </div>
     </div>
   </div>
-    </div>
 </template>
 
 <script>
@@ -265,7 +268,7 @@ zaprati(username) {
 
 /* Stilizacija za opis slike */
 #imageDescription {
-  width: 100%;
+  width: 500%;
 }
 
 /* Stilizacija za dugme */
