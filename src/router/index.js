@@ -5,6 +5,7 @@ import FirstPage from '../views/FirstPage.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
 import store from '@/store';
+import UserProfile from '../views/UserProfile.vue'; 
 
 Vue.use(VueRouter)
 
@@ -20,25 +21,16 @@ const routes = [
   {
     path: '/FirstPage',
     name: 'FirstPage',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "FirstPage" */ '../views/FirstPage.vue')
   },
   {
     path: '/login',
     name: 'login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "Login" */ '../views/Login.vue')
   },
   {
     path: "/signup",
     name: "signup",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Signup.vue"),
   },
@@ -48,11 +40,14 @@ const routes = [
     component: () => import('../views/ImageDetail.vue'),
     meta: {
       needsAuth: true,
-    },
+    }
+  },
+  {
+    path: '/profile',
+    name: 'UserProfile',
+    component: UserProfile
   }
-  
-
-]
+];
 
 const router = new VueRouter({
   mode: 'history',
@@ -71,6 +66,7 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }  
-   });
+});
 
 export default router;
+
