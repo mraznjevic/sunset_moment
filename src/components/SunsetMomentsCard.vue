@@ -1,15 +1,16 @@
-<<template>
+<template>
   <div class="card text-center">
     <div class="card-header">
       {{ info.description }}
     </div>
     <div class="card-body p-0">
-      <img class="card-img-top" :src="info.url" />
+      <router-link :to="{ name: 'ImageDetail', params: { id: info.id } }">
+        <img class="card-img-top" :src="info.url" />
+      </router-link>
     </div>
     <div class="card-footer text-muted">
       {{ postedFromNow }}
     </div>
-
     <!-- Prikaz postojećih komentara -->
     <div class="comments">
       <div v-for="(comment, index) in info.comments" :key="index" class="comment">
@@ -18,7 +19,6 @@
         <span>{{ formatDate(comment.timestamp) }}</span>
       </div>
     </div>
-
     <!-- Unos novog komentara -->
     <div class="add-comment">
       <input type="text" v-model="newCommentText" placeholder="Dodaj komentar..." />
@@ -45,19 +45,17 @@ export default {
   methods: {
     addNewComment() {
       if (!this.newCommentText) return;
-
-      // Emitirajte događaj s podacima postId i teksta novog komentara
       this.$emit('add-comment', this.info.id, this.newCommentText);
-
-      // Resetirajte polje za unos novog komentara
       this.newCommentText = '';
     },
     formatDate(timestamp) {
-      // Implementirajte logiku za formatiranje vremenske oznake
+      return new Date(timestamp).toLocaleString();
     }
   }
 };
 </script>
+
+
 
 <style scoped>
 .comments {
