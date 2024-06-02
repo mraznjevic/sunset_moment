@@ -255,6 +255,7 @@ zaprati(username) {
   },
 };
 </script>
+
 <style>
 /* Stilizacija za login-container */
 .login-container {
@@ -265,6 +266,15 @@ zaprati(username) {
 .form-group {
   margin-bottom: 20px;
 }
+
+/* Stilizacija za input polje */
+.form-control {
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
 
 /* Stilizacija za opis slike */
 #imageDescription {

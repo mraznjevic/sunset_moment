@@ -1,4 +1,5 @@
 <template>
+<div class="login-container">
   <div v-if="image" class="image-detail">
     <h1>{{ image.description }}</h1>
     <img :src="image.url" :alt="image.description" class="image"/>
@@ -17,6 +18,7 @@
   </div>
   <div v-else class="loading">
     <p>Učitavanje...</p>
+  </div>
   </div>
 </template>
 
@@ -73,7 +75,7 @@ export default {
 
 <style scoped>
 .image-detail {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   text-align: center;
