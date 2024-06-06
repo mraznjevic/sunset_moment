@@ -1,4 +1,5 @@
 <template>
+<div class="login-container">
   <div class="profile-container">
     <h1>User Profile</h1>
     <form @submit.prevent="updateUserProfile">
@@ -28,6 +29,7 @@
       <button type="submit">Update Profile</button>
     </form>
   </div>
+    </div>
 </template>
 
 <script>
