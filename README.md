@@ -1,19 +1,43 @@
 # Aplikacija Sunset moments
 
-## Project setup
+
+Fakultet informatike u Puli
+
+Kolegij: Programsko Inženjerstvo
+
+Mentor: doc.dr.sc. Nikola Tanković http://ntankovic.unipu.hr/pi
+
+## Opis
 ```
-npm install
+Aplikacija Sunset Moments omogućava prijavljenim korisnicima dijeljenje i komentiranje
+slika zalazaka sunca te pretraživanje i praćenje drugih korisnika kao i upravljanje svojim profilom.
+
+
+
+
+```
+### Kratki opis funkcionalnosti
+```
+Kreiranje računa - registracija novih korisnika.
+Prijavljivanje -  prijava postojećih korisnika.
+Profil korisnika - pregled i izmjena podataka o korisnicima.
+Objava slika - korisnici mogu dodavati slike s opisom.
+Komentiranje - mogućnost komentiranja objavljenih slika.
+Pregled detalja slike - pregled slika s detaljnim informacijama i komentarima.
+Pretraživanje korisnika - mogućnost pretrage drugih korisnika aplikacije.
+Praćenje korisnika - mogućnost praćenja i otpraćivanja drugih korisnika.
+Odjava - Opcija odjavljivanja s računa.
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
+### Link na javni prototip
+
+https://sunset-moments.vercel.app/FirstPage
 ```
 
-### Compiles and minifies for production
 ```
-npm run build
-```
+### Test user
+Email: test@gmail.com
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Password: 123456
+
+
